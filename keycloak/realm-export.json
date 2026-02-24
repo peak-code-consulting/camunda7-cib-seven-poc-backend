@@ -1,0 +1,130 @@
+{
+  "id": "camunda-realm",
+  "realm": "camunda-realm",
+  "enabled": true,
+  "displayName": "Camunda Realm",
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "clients": [
+    {
+      "clientId": "camunda-app",
+      "enabled": true,
+      "publicClient": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false,
+      "redirectUris": [
+        "http://localhost:8080/*",
+        "http://localhost:7505/*",
+        "http://127.0.0.1:8080/*",
+        "http://127.0.0.1:7505/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "secret": "change-this-secret"
+    },
+    {
+      "clientId": "camunda-webapps",
+      "enabled": true,
+      "publicClient": true,
+      "bearerOnly": true,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:8080/camunda/*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "employee",
+        "description": "Employee role"
+      },
+      {
+        "name": "manager",
+        "description": "Manager role"
+      },
+      {
+        "name": "admin",
+        "description": "Admin role"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "alice",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "alice@example.com",
+      "firstName": "Alice",
+      "lastName": "Employee",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "alice123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["employee"]
+    },
+    {
+      "username": "bob",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "bob@example.com",
+      "firstName": "Bob",
+      "lastName": "Manager",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "bob123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["manager"]
+    },
+    {
+      "username": "charlie",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "charlie@example.com",
+      "firstName": "Charlie",
+      "lastName": "Admin",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "charlie123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["admin"]
+    },
+    {
+      "username": "diana",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "diana@example.com",
+      "firstName": "Diana",
+      "lastName": "Hybrid",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "diana123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["employee", "manager"]
+    }
+  ]
+}

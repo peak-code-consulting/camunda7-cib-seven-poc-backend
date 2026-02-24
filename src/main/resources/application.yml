@@ -1,0 +1,51 @@
+server:
+  port: 7509
+
+spring:
+  application:
+    name: camunda-backend
+
+  datasource:
+    url: jdbc:mariadb://localhost:7506/camunda?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: camunda
+    password: camundapassword
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      connection-init-sql: SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: camunda-app
+            client-secret: change-this-secret
+            scope: openid,profile,email
+            authorization-grant-type: password
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:7508/realms/camunda-realm
+
+camunda:
+  bpm:
+    auto-deployment:
+      enabled: true
+    default-serialization-format: application/json
+    history-level: none
+    enforce-history-ttl: false
+    database:
+      schema-update: true
+
+logging:
+  level:
+    root: INFO
+    org.camunda: INFO
+    org.springframework.security: INFO

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0inyr1o" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
+  <bpmn:process id="approval-process" name="Approval Process" isExecutable="true" camunda:historyTimeToLive="3600">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_1et4ven</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Activity_SubmitRequest" name="Submit Request" camunda:assignee="alice" camunda:candidateGroups="employee">
+      <bpmn:incoming>Flow_1et4ven</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z67h8y</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1et4ven" sourceRef="StartEvent_1" targetRef="Activity_SubmitRequest" />
+    <bpmn:exclusiveGateway id="Gateway_AmountCheck" name="Amount Check">
+      <bpmn:incoming>Flow_0z67h8y</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rgryu5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0fjhzp4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0z67h8y" sourceRef="Activity_SubmitRequest" targetRef="Gateway_AmountCheck" />
+    <bpmn:userTask id="Activity_ManagerApproval" name="Manager Approval" camunda:assignee="bob" camunda:candidateGroups="manager">
+      <bpmn:incoming>Flow_0rgryu5</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o52c24</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0rgryu5" name="High Amount" sourceRef="Gateway_AmountCheck" targetRef="Activity_ManagerApproval">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${amount &gt; 1000}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Activity_0h3q8vd" name="Mark As Done" camunda:assignee="diana" camunda:candidateGroups="employee">
+      <bpmn:incoming>Flow_0fjhzp4</bpmn:incoming>
+      <bpmn:incoming>Flow_1o52c24</bpmn:incoming>
+      <bpmn:outgoing>Flow_06esy2u</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0fjhzp4" name="Low Amount" sourceRef="Gateway_AmountCheck" targetRef="Activity_0h3q8vd">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${amount &lt;= 1000}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1o52c24" sourceRef="Activity_ManagerApproval" targetRef="Activity_0h3q8vd" />
+    <bpmn:endEvent id="Event_0wl7m6o">
+      <bpmn:incoming>Flow_06esy2u</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_06esy2u" sourceRef="Activity_0h3q8vd" targetRef="Event_0wl7m6o" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="approval-process">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="112" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="188" y="155" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dg9672_di" bpmnElement="Activity_SubmitRequest">
+        <dc:Bounds x="270" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0olakxk_di" bpmnElement="Gateway_AmountCheck" isMarkerVisible="true">
+        <dc:Bounds x="425" y="105" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="413" y="81" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vd2j5b_di" bpmnElement="Activity_ManagerApproval">
+        <dc:Bounds x="540" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0h3q8vd_di" bpmnElement="Activity_0h3q8vd">
+        <dc:Bounds x="740" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wl7m6o_di" bpmnElement="Event_0wl7m6o">
+        <dc:Bounds x="942" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1et4ven_di" bpmnElement="Flow_1et4ven">
+        <di:waypoint x="218" y="130" />
+        <di:waypoint x="270" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z67h8y_di" bpmnElement="Flow_0z67h8y">
+        <di:waypoint x="370" y="130" />
+        <di:waypoint x="425" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rgryu5_di" bpmnElement="Flow_0rgryu5">
+        <di:waypoint x="450" y="155" />
+        <di:waypoint x="450" y="240" />
+        <di:waypoint x="540" y="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="455" y="195" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fjhzp4_di" bpmnElement="Flow_0fjhzp4">
+        <di:waypoint x="475" y="130" />
+        <di:waypoint x="740" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="577" y="112" width="61" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o52c24_di" bpmnElement="Flow_1o52c24">
+        <di:waypoint x="640" y="240" />
+        <di:waypoint x="790" y="240" />
+        <di:waypoint x="790" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06esy2u_di" bpmnElement="Flow_06esy2u">
+        <di:waypoint x="840" y="130" />
+        <di:waypoint x="942" y="130" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
