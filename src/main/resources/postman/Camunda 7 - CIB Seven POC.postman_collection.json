@@ -684,6 +684,67 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Claim Task",
+      "item": [
+        {
+          "name": "Claim Task",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:7509/api/tasks/{{task_id}}/claim",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "tasks",
+                "{{task_id}}",
+                "claim"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
     }
   ]
 }

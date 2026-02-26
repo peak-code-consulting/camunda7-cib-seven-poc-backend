@@ -8,6 +8,8 @@ import org.camunda.bpm.engine.task.Task;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -86,6 +88,20 @@ public class CamundaTaskService {
         }
     }
 
+    public void claimTask(String taskId) {
+        String currentUserId = getCurrentUserId();
+
+        Task task = processEngine.getTaskService().createTaskQuery()
+                .taskId(taskId)
+                .singleResult();
+
+        if (task == null) {
+            throw new RuntimeException("Task not found: " + taskId);
+        }
+
+        processEngine.getTaskService().setAssignee(taskId, currentUserId);
+    }
+
     private Map<String, Object> convertVariables(Map<String, Object> variables) {
         if (variables == null) {
             return null;
@@ -114,9 +130,9 @@ public class CamundaTaskService {
         
         List<IdentityLink> identityLinks = processEngine.getTaskService().getIdentityLinksForTask(task.getId());
         for (IdentityLink link : identityLinks) {
-            if ("candidateGroups".equals(link.getType())) {
+            if ("candidate".equals(link.getType()) && link.getGroupId() != null) {
                 candidateGroups.add(link.getGroupId());
-            } else if ("candidateUsers".equals(link.getType())) {
+            } else if ("candidate".equals(link.getType()) && link.getUserId() != null) {
                 candidateUsers.add(link.getUserId());
             }
         }
@@ -141,6 +157,12 @@ public class CamundaTaskService {
             }
         }
 
+        if (!candidateUsers.isEmpty()) {
+            if (!candidateUsers.contains(currentUserId)) {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -159,6 +181,13 @@ public class CamundaTaskService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             return null;
+        }
+        if (authentication instanceof JwtAuthenticationToken jwtAuth) {
+            Jwt jwt = jwtAuth.getToken();
+            String preferredUsername = jwt.getClaimAsString("preferred_username");
+            if (preferredUsername != null && !preferredUsername.isBlank()) {
+                return preferredUsername;
+            }
         }
         return authentication.getName();
     }
@@ -181,9 +210,9 @@ public class CamundaTaskService {
         
         List<IdentityLink> identityLinks = processEngine.getTaskService().getIdentityLinksForTask(task.getId());
         for (IdentityLink link : identityLinks) {
-            if ("candidateGroups".equals(link.getType())) {
+            if ("candidate".equals(link.getType()) && link.getGroupId() != null) {
                 candidateGroups.add(link.getGroupId());
-            } else if ("candidateUsers".equals(link.getType())) {
+            } else if ("candidate".equals(link.getType()) && link.getUserId() != null) {
                 candidateUsers.add(link.getUserId());
             }
         }

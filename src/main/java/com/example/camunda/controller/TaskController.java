@@ -46,4 +46,14 @@ public class TaskController {
             return ResponseEntity.status(403).build();
         }
     }
+
+    @PostMapping("/{id}/claim")
+    public ResponseEntity<Void> claimTask(@PathVariable String id) {
+        try {
+            camundaTaskService.claimTask(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
