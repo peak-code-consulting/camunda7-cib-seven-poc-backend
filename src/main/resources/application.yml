@@ -29,13 +29,15 @@ spring:
             client-id: camunda-app
             client-secret: change-this-secret
             scope: openid,profile,email
-            authorization-grant-type: password
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           keycloak:
             issuer-uri: http://localhost:7508/realms/camunda-realm
 
 camunda:
   bpm:
+    authorization:
+      enabled: false
     auto-deployment:
       enabled: true
     default-serialization-format: application/json
@@ -43,6 +45,8 @@ camunda:
     enforce-history-ttl: false
     database:
       schema-update: true
+    oauth2:
+      enabled: true
 
 logging:
   level:

@@ -18,13 +18,11 @@
       "serviceAccountsEnabled": true,
       "authorizationServicesEnabled": false,
       "redirectUris": [
-        "http://localhost:8080/*",
-        "http://localhost:7505/*",
-        "http://127.0.0.1:8080/*",
-        "http://127.0.0.1:7505/*"
+        "http://localhost:7509/*",
+        "http://127.0.0.1:7509/*"
       ],
       "webOrigins": [
-        "*"
+        "http://localhost:7509"
       ],
       "secret": "change-this-secret"
     },
@@ -32,16 +30,16 @@
       "clientId": "camunda-webapps",
       "enabled": true,
       "publicClient": true,
-      "bearerOnly": true,
-      "standardFlowEnabled": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": false,
       "serviceAccountsEnabled": false,
       "redirectUris": [
-        "http://localhost:8080/camunda/*"
+        "http://localhost:7509/camunda/*"
       ],
       "webOrigins": [
-        "*"
+        "http://localhost:7509"
       ]
     }
   ],
