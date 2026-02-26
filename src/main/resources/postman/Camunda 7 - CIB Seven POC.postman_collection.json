@@ -1,0 +1,689 @@
+{
+  "info": {
+    "_postman_id": "ab19f193-8c40-4c93-86af-e9c0b17d623a",
+    "name": "Camunda 7 - CIB Seven POC",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "6971453"
+  },
+  "item": [
+    {
+      "name": "Get Access Tokens",
+      "item": [
+        {
+          "name": "Alice (Employee)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Tests tab - runs automatically after receiving the response",
+                  "",
+                  "// 1. Save the access token to an environment/collection variable",
+                  "pm.environment.set(\"access_token\", pm.response.json().access_token);",
+                  "",
+                  "// Optional: also save refresh token if you plan to use it later",
+                  "pm.environment.set(\"refresh_token\", pm.response.json().refresh_token);",
+                  "",
+                  "// Optional: save when it expires (useful for debugging)",
+                  "const expiresIn = pm.response.json().expires_in;",
+                  "const expiresAt = Date.now() + (expiresIn * 1000);",
+                  "pm.environment.set(\"token_expires_at\", expiresAt);",
+                  "",
+                  "// Nice-to-have: console log for debugging",
+                  "console.log(\"Access token saved → \" + pm.environment.get(\"access_token\").substring(0,15) + \"...\");",
+                  "console.log(\"Expires in \" + expiresIn + \" seconds\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "type": "text",
+                  "key": "username",
+                  "value": "alice"
+                },
+                {
+                  "type": "text",
+                  "key": "password",
+                  "value": "alice123"
+                },
+                {
+                  "type": "text",
+                  "key": "grant_type",
+                  "value": "password"
+                },
+                {
+                  "type": "text",
+                  "key": "client_id",
+                  "value": "camunda-app"
+                },
+                {
+                  "type": "text",
+                  "key": "client_secret",
+                  "value": "change-this-secret"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:7508/realms/camunda-realm/protocol/openid-connect/token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7508",
+              "path": [
+                "realms",
+                "camunda-realm",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bob (Manager)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Tests tab - runs automatically after receiving the response",
+                  "",
+                  "// 1. Save the access token to an environment/collection variable",
+                  "pm.environment.set(\"access_token\", pm.response.json().access_token);",
+                  "",
+                  "// Optional: also save refresh token if you plan to use it later",
+                  "pm.environment.set(\"refresh_token\", pm.response.json().refresh_token);",
+                  "",
+                  "// Optional: save when it expires (useful for debugging)",
+                  "const expiresIn = pm.response.json().expires_in;",
+                  "const expiresAt = Date.now() + (expiresIn * 1000);",
+                  "pm.environment.set(\"token_expires_at\", expiresAt);",
+                  "",
+                  "// Nice-to-have: console log for debugging",
+                  "console.log(\"Access token saved → \" + pm.environment.get(\"access_token\").substring(0,15) + \"...\");",
+                  "console.log(\"Expires in \" + expiresIn + \" seconds\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "type": "text",
+                  "key": "username",
+                  "value": "bob"
+                },
+                {
+                  "type": "text",
+                  "key": "password",
+                  "value": "bob123"
+                },
+                {
+                  "type": "text",
+                  "key": "grant_type",
+                  "value": "password"
+                },
+                {
+                  "type": "text",
+                  "key": "client_id",
+                  "value": "camunda-app"
+                },
+                {
+                  "type": "text",
+                  "key": "client_secret",
+                  "value": "change-this-secret"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:7508/realms/camunda-realm/protocol/openid-connect/token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7508",
+              "path": [
+                "realms",
+                "camunda-realm",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Charlie (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Tests tab - runs automatically after receiving the response",
+                  "",
+                  "// 1. Save the access token to an environment/collection variable",
+                  "pm.environment.set(\"access_token\", pm.response.json().access_token);",
+                  "",
+                  "// Optional: also save refresh token if you plan to use it later",
+                  "pm.environment.set(\"refresh_token\", pm.response.json().refresh_token);",
+                  "",
+                  "// Optional: save when it expires (useful for debugging)",
+                  "const expiresIn = pm.response.json().expires_in;",
+                  "const expiresAt = Date.now() + (expiresIn * 1000);",
+                  "pm.environment.set(\"token_expires_at\", expiresAt);",
+                  "",
+                  "// Nice-to-have: console log for debugging",
+                  "console.log(\"Access token saved → \" + pm.environment.get(\"access_token\").substring(0,15) + \"...\");",
+                  "console.log(\"Expires in \" + expiresIn + \" seconds\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "type": "text",
+                  "key": "username",
+                  "value": "charlie"
+                },
+                {
+                  "type": "text",
+                  "key": "password",
+                  "value": "charlie123"
+                },
+                {
+                  "type": "text",
+                  "key": "grant_type",
+                  "value": "password"
+                },
+                {
+                  "type": "text",
+                  "key": "client_id",
+                  "value": "camunda-app"
+                },
+                {
+                  "type": "text",
+                  "key": "client_secret",
+                  "value": "change-this-secret"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:7508/realms/camunda-realm/protocol/openid-connect/token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7508",
+              "path": [
+                "realms",
+                "camunda-realm",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Diana (Employee and Manager)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Tests tab - runs automatically after receiving the response",
+                  "",
+                  "// 1. Save the access token to an environment/collection variable",
+                  "pm.environment.set(\"access_token\", pm.response.json().access_token);",
+                  "",
+                  "// Optional: also save refresh token if you plan to use it later",
+                  "pm.environment.set(\"refresh_token\", pm.response.json().refresh_token);",
+                  "",
+                  "// Optional: save when it expires (useful for debugging)",
+                  "const expiresIn = pm.response.json().expires_in;",
+                  "const expiresAt = Date.now() + (expiresIn * 1000);",
+                  "pm.environment.set(\"token_expires_at\", expiresAt);",
+                  "",
+                  "// Nice-to-have: console log for debugging",
+                  "console.log(\"Access token saved → \" + pm.environment.get(\"access_token\").substring(0,15) + \"...\");",
+                  "console.log(\"Expires in \" + expiresIn + \" seconds\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "type": "text",
+                  "key": "username",
+                  "value": "diana"
+                },
+                {
+                  "type": "text",
+                  "key": "password",
+                  "value": "diana123"
+                },
+                {
+                  "type": "text",
+                  "key": "grant_type",
+                  "value": "password"
+                },
+                {
+                  "type": "text",
+                  "key": "client_id",
+                  "value": "camunda-app"
+                },
+                {
+                  "type": "text",
+                  "key": "client_secret",
+                  "value": "change-this-secret"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:7508/realms/camunda-realm/protocol/openid-connect/token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7508",
+              "path": [
+                "realms",
+                "camunda-realm",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Get Process Definitions",
+      "item": [
+        {
+          "name": "Get Process Definitions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <YOUR_ACCESS_TOKEN>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:7509/api/process-definitions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "process-definitions"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Start a Process",
+      "item": [
+        {
+          "name": "Start a Process",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <YOUR_ACCESS_TOKEN>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"variables\": {\n        \"amount\": 1500\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:7509/api/process-definitions/approval-process/start",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "process-definitions",
+                "approval-process",
+                "start"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Get All Tasks",
+      "item": [
+        {
+          "name": "Get All Tasks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"task_id\", pm.response.json()[0].id);",
+                  "pm.environment.set(\"process_instance_id\", pm.response.json()[0].processInstanceId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "type": "text",
+                  "key": "username",
+                  "value": "alice"
+                },
+                {
+                  "type": "text",
+                  "key": "password",
+                  "value": "alice"
+                },
+                {
+                  "type": "text",
+                  "key": "grant_type",
+                  "value": "password"
+                },
+                {
+                  "type": "text",
+                  "key": "client_id",
+                  "value": "camunda-app"
+                },
+                {
+                  "type": "text",
+                  "key": "client_secret",
+                  "value": "change-this-secret"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:7509/api/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Get Single Task",
+      "item": [
+        {
+          "name": "Get Single Task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:7509/api/tasks/{{task_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "tasks",
+                "{{task_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Complete a Task",
+      "item": [
+        {
+          "name": "Complete a Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <YOUR_ACCESS_TOKEN>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"variables\": {\n        \"amount\": 1500\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:7509/api/tasks/{{task_id}}/complete",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "tasks",
+                "{{task_id}}",
+                "complete"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Get Process Instance",
+      "item": [
+        {
+          "name": "Get Process Instance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <YOUR_ACCESS_TOKEN>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:7509/api/process-instances/{{process_instance_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "process-instances",
+                "{{process_instance_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Get Process Variables",
+      "item": [
+        {
+          "name": "Get Process Variables",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <YOUR_ACCESS_TOKEN>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:7509/api/process-instances/{{process_instance_id}}/variables",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "process-instances",
+                "{{process_instance_id}}",
+                "variables"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Delete Process",
+      "item": [
+        {
+          "name": "Delete Process",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <YOUR_TOKEN>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:7509/api/process-instances/{{process_instance_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "7509",
+              "path": [
+                "api",
+                "process-instances",
+                "{{process_instance_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
