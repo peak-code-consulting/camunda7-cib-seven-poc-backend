@@ -18,7 +18,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <camunda.version>7.22.0-cibseven</camunda.version>
+        <cibseven.version>1.1.0</cibseven.version>
         <keycloak.version>24.0.4</keycloak.version>
     </properties>
 
@@ -47,24 +47,24 @@
 
         <!-- Camunda -->
         <dependency>
-            <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter</artifactId>
-            <version>${camunda.version}</version>
+            <groupId>org.cibseven.bpm.springboot</groupId>
+            <artifactId>cibseven-bpm-spring-boot-starter</artifactId>
+            <version>${cibseven.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
-            <version>${camunda.version}</version>
+            <groupId>org.cibseven.bpm.springboot</groupId>
+            <artifactId>cibseven-bpm-spring-boot-starter-rest</artifactId>
+            <version>${cibseven.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
-            <version>${camunda.version}</version>
+            <groupId>org.cibseven.bpm.springboot</groupId>
+            <artifactId>cibseven-bpm-spring-boot-starter-webapp</artifactId>
+            <version>${cibseven.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter-security</artifactId>
-            <version>${camunda.version}</version>
+            <groupId>org.cibseven.bpm.springboot</groupId>
+            <artifactId>cibseven-bpm-spring-boot-starter-security</artifactId>
+            <version>${cibseven.version}</version>
         </dependency>
 
         <!-- Database -->
@@ -102,6 +102,23 @@
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.openrewrite.maven</groupId>
+                    <artifactId>rewrite-maven-plugin</artifactId>
+                    <version>5.44.0</version>
+                    <configuration>
+                        <configLocation>
+                            https://cibseven.github.io/cibseven-migration/replace-camunda-with-cibseven.yml
+                        </configLocation>
+                        <activeRecipes>
+                            <recipe>org.cibseven.ReplaceCamundaWithCIBSeven</recipe>
+                        </activeRecipes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -2,7 +2,7 @@ package com.example.camunda.controller;
 
 import com.example.camunda.dto.ProcessInstanceDto;
 import com.example.camunda.dto.StartProcessDto;
-import com.example.camunda.service.ProcessService;
+import com.example.camunda.service.CibProcessService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/processes")
 public class ProcessController {
 
-    private final ProcessService processService;
+    private final CibProcessService cibProcessService;
 
-    public ProcessController(ProcessService processService) {
-        this.processService = processService;
+    public ProcessController(CibProcessService cibProcessService) {
+        this.cibProcessService = cibProcessService;
     }
 
     @PostMapping("/{key}/start")
@@ -23,7 +23,7 @@ public class ProcessController {
         if (startProcessDto == null) {
             startProcessDto = new StartProcessDto();
         }
-        ProcessInstanceDto instance = processService.startProcess(key, startProcessDto);
+        ProcessInstanceDto instance = cibProcessService.startProcess(key, startProcessDto);
         return ResponseEntity.ok(instance);
     }
 }

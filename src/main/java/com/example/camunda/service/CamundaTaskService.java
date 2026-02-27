@@ -2,9 +2,9 @@ package com.example.camunda.service;
 
 import com.example.camunda.dto.CompleteTaskDto;
 import com.example.camunda.dto.TaskDto;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.task.IdentityLink;
-import org.camunda.bpm.engine.task.Task;
+import org.cibseven.bpm.engine.ProcessEngine;
+import org.cibseven.bpm.engine.task.IdentityLink;
+import org.cibseven.bpm.engine.task.Task;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

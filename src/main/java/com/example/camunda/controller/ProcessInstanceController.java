@@ -2,7 +2,7 @@ package com.example.camunda.controller;
 
 import com.example.camunda.dto.ProcessInstanceDto;
 import com.example.camunda.dto.VariableDto;
-import com.example.camunda.service.ProcessService;
+import com.example.camunda.service.CibProcessService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +12,15 @@ import java.util.List;
 @RequestMapping("/api/process-instances")
 public class ProcessInstanceController {
 
-    private final ProcessService processService;
+    private final CibProcessService cibProcessService;
 
-    public ProcessInstanceController(ProcessService processService) {
-        this.processService = processService;
+    public ProcessInstanceController(CibProcessService cibProcessService) {
+        this.cibProcessService = cibProcessService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProcessInstanceDto> getProcessInstance(@PathVariable String id) {
-        ProcessInstanceDto instance = processService.getProcessInstance(id);
+        ProcessInstanceDto instance = cibProcessService.getProcessInstance(id);
         if (instance == null) {
             return ResponseEntity.notFound().build();
         }
@@ -29,16 +29,16 @@ public class ProcessInstanceController {
 
     @GetMapping("/{id}/variables")
     public ResponseEntity<List<VariableDto>> getProcessVariables(@PathVariable String id) {
-        ProcessInstanceDto instance = processService.getProcessInstance(id);
+        ProcessInstanceDto instance = cibProcessService.getProcessInstance(id);
         if (instance == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(processService.getProcessVariables(id));
+        return ResponseEntity.ok(cibProcessService.getProcessVariables(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProcessInstance(@PathVariable String id) {
-        boolean deleted = processService.deleteProcessInstance(id);
+        boolean deleted = cibProcessService.deleteProcessInstance(id);
         if (!deleted) {
             return ResponseEntity.notFound().build();
         }

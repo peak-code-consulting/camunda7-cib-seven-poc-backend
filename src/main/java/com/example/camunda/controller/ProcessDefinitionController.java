@@ -3,7 +3,7 @@ package com.example.camunda.controller;
 import com.example.camunda.dto.ProcessDefinitionDto;
 import com.example.camunda.dto.ProcessInstanceDto;
 import com.example.camunda.dto.StartProcessDto;
-import com.example.camunda.service.ProcessService;
+import com.example.camunda.service.CibProcessService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,20 +13,20 @@ import java.util.List;
 @RequestMapping("/api/process-definitions")
 public class ProcessDefinitionController {
 
-    private final ProcessService processService;
+    private final CibProcessService cibProcessService;
 
-    public ProcessDefinitionController(ProcessService processService) {
-        this.processService = processService;
+    public ProcessDefinitionController(CibProcessService cibProcessService) {
+        this.cibProcessService = cibProcessService;
     }
 
     @GetMapping
     public List<ProcessDefinitionDto> getProcessDefinitions() {
-        return processService.getProcessDefinitions();
+        return cibProcessService.getProcessDefinitions();
     }
 
     @GetMapping("/{key}/instances")
     public List<ProcessInstanceDto> getProcessInstances(@PathVariable String key) {
-        return processService.getProcessInstancesByKey(key);
+        return cibProcessService.getProcessInstancesByKey(key);
     }
 
     @PostMapping("/{key}/start")
@@ -36,7 +36,7 @@ public class ProcessDefinitionController {
         if (startProcessDto == null) {
             startProcessDto = new StartProcessDto();
         }
-        ProcessInstanceDto instance = processService.startProcess(key, startProcessDto);
+        ProcessInstanceDto instance = cibProcessService.startProcess(key, startProcessDto);
         return ResponseEntity.ok(instance);
     }
 }

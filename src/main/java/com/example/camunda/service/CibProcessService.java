@@ -4,12 +4,12 @@ import com.example.camunda.dto.ProcessDefinitionDto;
 import com.example.camunda.dto.ProcessInstanceDto;
 import com.example.camunda.dto.StartProcessDto;
 import com.example.camunda.dto.VariableDto;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.RepositoryService;
-import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.runtime.VariableInstance;
+import org.cibseven.bpm.engine.ProcessEngine;
+import org.cibseven.bpm.engine.RepositoryService;
+import org.cibseven.bpm.engine.RuntimeService;
+import org.cibseven.bpm.engine.repository.ProcessDefinition;
+import org.cibseven.bpm.engine.runtime.ProcessInstance;
+import org.cibseven.bpm.engine.runtime.VariableInstance;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +17,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ProcessService {
+public class CibProcessService {
 
     private final RuntimeService runtimeService;
     private final RepositoryService repositoryService;
 
-    public ProcessService(ProcessEngine processEngine) {
+    public CibProcessService(ProcessEngine processEngine) {
         this.runtimeService = processEngine.getRuntimeService();
         this.repositoryService = processEngine.getRepositoryService();
     }
