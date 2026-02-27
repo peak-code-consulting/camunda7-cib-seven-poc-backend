@@ -962,4 +962,19 @@ curl -X POST http://localhost:7509/api/process-definitions/approval-process/star
 
 ---
 
+Create DB dump:
+```
+docker-compose stop mariadb
+mkdir -p backups
+docker run --rm -v backend_mariadb_data:/data -v $(pwd)/backups:/backup alpine tar czf /backup/mariadb_snapshot.tar.gz -C /data .
+docker-compose start mariadb
+```
+
+Restore DB dump:
+```
+docker-compose stop mariadb
+docker run --rm -v backend_mariadb_data:/data -v $(pwd)/backups:/backup alpine sh -c "rm -rf /data/* && tar xzf /backup/mariadb_snapshot.tar.gz -C /data"
+docker-compose start mariadb
+```
+
 *Last updated: February 2026*

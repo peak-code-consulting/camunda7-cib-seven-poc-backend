@@ -22,7 +22,8 @@
         "http://127.0.0.1:7509/*"
       ],
       "webOrigins": [
-        "http://localhost:7509"
+        "http://localhost:7509",
+        "http://localhost:5173"
       ],
       "secret": "change-this-secret"
     },
