@@ -45,6 +45,13 @@ camunda:
   bpm:
     authorization:
       enabled: false
+    admin-user:
+      id: demo
+      password: demo
+      firstName: Demo
+      lastName: User
+    filter:
+      create: All tasks
     auto-deployment:
       enabled: true
     default-serialization-format: application/json
@@ -53,7 +60,17 @@ camunda:
     database:
       schema-update: true
     oauth2:
-      enabled: true
+      identity-provider:
+        enabled: false
+
+cibseven:
+  webclient:
+    services:
+      basePath: /webapp/services/v1
+    engineRest:
+      url: http://localhost:7509
+    authentication:
+      jwtSecret: RtURHZ7SQYfLoX902wcjlvduW2qe9g0bjMUczmffjiTjzU9phbv3mK54zHMqeGK6cqgoEBTIUE6RqwvemSqbpD40qUPXVRElvDHGhn4OAEfjeEP2ANah8GJejSA08E820mForcQHBmediqg2DzIrxnDXyf2
 
 logging:
   level:
